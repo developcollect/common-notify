@@ -1,13 +1,14 @@
 package com.developcollect.commonnotify.notify;
 
 import cn.hutool.core.lang.Assert;
-import com.developcollect.commonnotify.IMessageTemplate;
+import com.developcollect.commonnotify.NotifyContext;
+import com.developcollect.commonnotify.NotifyResult;
+import com.developcollect.commonnotify.config.AbstractNotifyConfig;
+import com.developcollect.commonnotify.config.IMessageTemplate;
 import com.developcollect.commonnotify.exception.NotifyException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Zhu Kaixiao
@@ -17,39 +18,42 @@ import java.util.stream.Collectors;
  * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
  */
 @Slf4j
-abstract class AbstractNotify implements Notify {
+public abstract class AbstractNotify implements Notify {
 
     @Override
-    public void send(String templateSymbol, Map<String, String> vals, Collection<String> targets) {
-        Assert.notBlank(templateSymbol, "模板标识不能为空字符串");
-        Assert.notEmpty(targets, "通知目标不能为空");
+    public NotifyResult send(NotifyParameter notifyParameter) {
+        validParameter(notifyParameter);
+        // 初始化上下文
+        NotifyContext context = NotifyContext.init(notifyParameter);
 
-        // 1. 获取消息模板
-        IMessageTemplate messageTemplate = getBySymbol(templateSymbol);
+        // 获取消息模板
+        IMessageTemplate messageTemplate = getBySymbol(notifyParameter.getTemplateSymbol());
         if (messageTemplate == null) {
-            throw new NotifyException("消息模板不存在: symbol: [{}]", templateSymbol);
+            throw new NotifyException("消息模板不存在: symbol: [{}]", notifyParameter.getTemplateSymbol());
         }
-        String template = fetchTemplateFromIMessageTemplate(messageTemplate);
-        String title = fetchTitleFromIMessageTemplate(messageTemplate);
 
-        // 2. 填充消息模板
-        String msg = TextTemplate.mold(template, vals);
+        //
+        AbstractNotifyConfig notifyConfig = context.getNotifyConfig();
+        String content = notifyConfig.getContentProcessor().apply(messageTemplate);
+        String title = notifyConfig.getTitleProcessor().apply(messageTemplate);
 
-        // 3. 去重
-        targets = targets.stream().distinct().collect(Collectors.toList());
-
-        // 4. 发信
-        log.debug("发送通知: 目标:[{}],  内容:[{}]", targets, msg);
-        send(title, msg, targets);
+        // 发信
+        log.debug("发送通知: 目标:[{}],  内容:[{}]", notifyParameter.getTos(), content);
+        NotifyResult notifyResult = send(title, content, notifyParameter.getTos());
+        return notifyResult;
     }
 
-    protected abstract void send(String title, String notifyContent, Collection<String> targets);
+    protected abstract NotifyResult send(String title, String notifyContent, Collection<String> targets);
 
     protected IMessageTemplate getBySymbol(String templateSymbol) {
-        return MessageTemplateHelper.getBySymbol(templateSymbol);
+        AbstractNotifyConfig notifyConfig = NotifyContext.currContext().getNotifyConfig();
+        IMessageTemplate messageTemplate = notifyConfig.getMessageTemplateFetcher().apply(templateSymbol);
+        return messageTemplate;
     }
 
-    protected abstract String fetchTemplateFromIMessageTemplate(IMessageTemplate messageTemplate);
+    protected void validParameter(NotifyParameter notifyParameter) {
+        Assert.notBlank(notifyParameter.getTemplateSymbol(), "模板标识不能为空字符串");
+        Assert.notEmpty(notifyParameter.getTos(), "通知目标不能为空");
+    }
 
-    protected abstract String fetchTitleFromIMessageTemplate(IMessageTemplate messageTemplate);
 }

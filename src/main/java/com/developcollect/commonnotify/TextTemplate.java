@@ -1,4 +1,4 @@
-package com.developcollect.commonnotify.notify;
+package com.developcollect.commonnotify;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
