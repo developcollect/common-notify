@@ -15,13 +15,12 @@ public class NotifyContext {
 
     private AbstractNotifyConfig notifyConfig;
 
+    private NotifyParameter notifyParameter;
 
     private NotifyContext() {
     }
 
-    public <T extends AbstractNotifyConfig> T getNotifyConfig() {
-        return (T) notifyConfig;
-    }
+
 
     private static ThreadLocal<NotifyContext> notifyContextThreadLocal = new ThreadLocal<>();
 
@@ -30,6 +29,7 @@ public class NotifyContext {
      */
     public static NotifyContext init(NotifyParameter notifyParameter) {
         NotifyContext context = new NotifyContext();
+        context.notifyParameter = notifyParameter;
         context.notifyConfig = NotifyGlobalConfig.getNotifyConfig(notifyParameter.getNotifyType());
         notifyContextThreadLocal.set(context);
         return context;
@@ -40,4 +40,11 @@ public class NotifyContext {
         return notifyContextThreadLocal.get();
     }
 
+    public <T extends NotifyParameter> T getNotifyParameter() {
+        return (T) this.notifyParameter;
+    }
+
+    public <T extends AbstractNotifyConfig> T getNotifyConfig() {
+        return (T) notifyConfig;
+    }
 }

@@ -1,8 +1,12 @@
 package com.developcollect.commonnotify.notify.email;
 
+import com.developcollect.commonnotify.NotifyTypes;
 import com.developcollect.commonnotify.notify.BaseNotifyParameter;
+import lombok.Data;
+import org.springframework.core.io.Resource;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Zhu Kaixiao
@@ -11,6 +15,7 @@ import java.util.Collection;
  * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
  * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
  */
+@Data
 public class EmailNotifyParameter extends BaseNotifyParameter {
 
     /**
@@ -23,11 +28,14 @@ public class EmailNotifyParameter extends BaseNotifyParameter {
      */
     private Collection<String> bccs;
 
-    // todo  附件
+    /**
+     * 附件
+     */
+    private List<Resource> resource;
 
     @Override
     public int getNotifyType() {
-        return 0;
+        return NotifyTypes.EMAIL;
     }
 
 }
