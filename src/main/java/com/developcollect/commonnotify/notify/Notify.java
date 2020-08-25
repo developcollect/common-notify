@@ -5,11 +5,8 @@ import com.developcollect.commonnotify.NotifyResult;
 import java.io.Serializable;
 
 /**
- * @author Zhu Kaixiao
- * @version 1.0
- * @date 2020/5/31 14:31
- * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
- * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
+ * @author zak
+ * @version 1.0.0
  */
 public interface Notify extends Serializable {
 
@@ -21,7 +18,7 @@ public interface Notify extends Serializable {
      *
      * @param notifyParameter 通知参数
      * @return 通知结果
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/8/24 14:32
      */
     NotifyResult send(NotifyParameter notifyParameter);

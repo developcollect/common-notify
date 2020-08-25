@@ -12,11 +12,8 @@ import java.util.regex.Pattern;
  * 文本模板
  * 用于将模板中的变量占位符替换成变量值
  *
- * @author Zhu Kaixiao
- * @version 1.0
- * @date 2020/4/7 10:12
- * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
- * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
+ * @author zak
+ * @since 1.0.0
  */
 public class TextTemplate {
 
@@ -24,14 +21,16 @@ public class TextTemplate {
      * 变量匹配表达式
      * 格式: 以{{开头 以}}结尾, 中间变量名为大小写字母,数字,下划线组成, 且第一位只能是大小写字母
      */
-    private static final Pattern template_var_pattern = Pattern.compile("\\{\\{([A-Za-z]+?[A-Za-z0-9_]*?)}}");
+    private static Pattern TEMPLATE_PLACEHOLDER_PATTERN = Pattern.compile("\\{\\{([A-Za-z]+?[A-Za-z0-9_]*?)}}");
 
+
+    // TODO  MRU
     private static final Map<String, TextTemplate> TEXT_TEMPLATE_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 模板
      *
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/4/7 10:14
      */
     private String templateStr;
@@ -39,7 +38,7 @@ public class TextTemplate {
     /**
      * 模板变量
      *
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/4/7 10:14
      */
     private LinkedHashMap<Region, String> templateVer;
@@ -48,7 +47,7 @@ public class TextTemplate {
     private TextTemplate(String templateStr) {
         this.templateStr = Objects.requireNonNull(templateStr);
         templateVer = new LinkedHashMap<>();
-        final Matcher matcher = template_var_pattern.matcher(templateStr);
+        Matcher matcher = TEMPLATE_PLACEHOLDER_PATTERN.matcher(templateStr);
         while (matcher.find()) {
             templateVer.put(new Region(matcher.start(), matcher.end()), matcher.group(1));
         }
@@ -63,7 +62,7 @@ public class TextTemplate {
      * @param vals 变量值
      * @return java.lang.String 变量填充后的文本
      * @throws IllegalArgumentException 当传入的变量值不能匹配模板中所有的变量时抛出此异常
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/4/9 14:36
      */
     public String mold(Map<String, String> vals) {
@@ -79,7 +78,7 @@ public class TextTemplate {
      * @param rigor true 严格模式, false 松散模式
      * @return java.lang.String
      * @throws IllegalArgumentException 在严格模式下, 当传入的变量值不能匹配模板中所有的变量时抛出此异常
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/4/9 14:37
      */
     public String mold(Map<String, String> vals, boolean rigor) {
@@ -114,7 +113,7 @@ public class TextTemplate {
      *
      * @param templateStr
      * @return com.jeecms.market.utils.TextTemplate
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/6/19 9:39
      */
     public static TextTemplate compile(String templateStr) {
@@ -129,7 +128,7 @@ public class TextTemplate {
 
     /**
      * @return java.lang.String
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/6/19 9:39
      * @see TextTemplate#compile(String)
      * @see TextTemplate#mold(Map)
@@ -140,7 +139,7 @@ public class TextTemplate {
 
     /**
      * @return java.lang.String
-     * @author Zhu Kaixiao
+     * @author zak
      * @date 2020/6/19 9:40
      * @see TextTemplate#compile(String)
      * @see TextTemplate#mold(Map, boolean)
@@ -150,6 +149,14 @@ public class TextTemplate {
     }
 
 
+    /**
+     * 设置占位符的正则表达式
+     *
+     * @param placeholderRegex
+     */
+    public static void setPlaceholderRegex(String placeholderRegex) {
+        TEMPLATE_PLACEHOLDER_PATTERN = Pattern.compile(placeholderRegex);
+    }
 
     @AllArgsConstructor
     private static class Region {

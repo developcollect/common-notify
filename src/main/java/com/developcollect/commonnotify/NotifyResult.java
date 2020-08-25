@@ -1,11 +1,40 @@
 package com.developcollect.commonnotify;
 
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * @author Zhu Kaixiao
- * @version 1.0
- * @date 2020/8/24 16:20
- * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
- * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
+ * @author zak
+ * @since 1.0.0
  */
-public class NotifyResult {
+@Data
+public class NotifyResult implements Serializable {
+
+
+    private List<SendResult> sendResults;
+
+
+    @Data
+    public static class SendResult {
+        /**
+         * 消息id
+         */
+        private String messageId;
+        /**
+         * 发送者
+         */
+        private String sender;
+        /**
+         * 接收者
+         */
+        private String recipient;
+        /**
+         * 是否发送成功
+         * 注意: 这里只是表示发送成功, 接收者并不一定接收成功
+         */
+        private Boolean success;
+    }
+
 }

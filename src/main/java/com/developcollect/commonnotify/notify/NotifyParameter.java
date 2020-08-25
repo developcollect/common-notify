@@ -2,15 +2,13 @@ package com.developcollect.commonnotify.notify;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * 参数
  *
- * @author Zhu Kaixiao
- * @version 1.0
- * @date 2020/8/24 16:16
- * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
- * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
+ * @author zak
+ * @since 1.0.0
  */
 public interface NotifyParameter extends Serializable {
 
@@ -19,7 +17,18 @@ public interface NotifyParameter extends Serializable {
      */
     int getNotifyType();
 
+    /**
+     * 模板标识
+     */
     String getTemplateSymbol();
 
+    /**
+     * 接收者
+     */
     Collection<String> getTos();
+
+    /**
+     * 模板变量
+     */
+    Map<String, String> getMessageTemplateValueMap();
 }

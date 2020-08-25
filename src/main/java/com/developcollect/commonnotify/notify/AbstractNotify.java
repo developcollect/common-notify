@@ -11,11 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collection;
 
 /**
- * @author Zhu Kaixiao
- * @version 1.0
- * @date 2020/5/31 14:35
- * @copyright 江西金磊科技发展有限公司 All rights reserved. Notice
- * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
+ * @author zak
+ * @since 1.0.0
  */
 @Slf4j
 public abstract class AbstractNotify implements Notify {
@@ -34,8 +31,8 @@ public abstract class AbstractNotify implements Notify {
 
         //
         AbstractNotifyConfig notifyConfig = context.getNotifyConfig();
-        String content = notifyConfig.getContentProcessor().apply(messageTemplate);
-        String title = notifyConfig.getTitleProcessor().apply(messageTemplate);
+        String content = notifyConfig.getContentProcessor().apply(messageTemplate, notifyParameter);
+        String title = notifyConfig.getTitleProcessor().apply(messageTemplate, notifyParameter);
 
         // 发信
         log.debug("发送通知: 目标:[{}],  内容:[{}]", notifyParameter.getTos(), content);

@@ -1,7 +1,6 @@
 package com.developcollect.commonnotify;
 
 
-import com.developcollect.commonnotify.notify.TextTemplate;
 import org.junit.Test;
 
 import java.util.HashMap;
