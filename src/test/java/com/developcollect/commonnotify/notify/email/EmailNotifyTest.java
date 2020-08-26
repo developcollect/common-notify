@@ -2,9 +2,8 @@ package com.developcollect.commonnotify.notify.email;
 
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.mail.MailAccount;
-import com.developcollect.commonnotify.NotifyResult;
+import com.developcollect.commonnotify.INotifyResult;
 import com.developcollect.commonnotify.NotifyTypes;
-import com.developcollect.commonnotify.config.EmailNotifyConfig;
 import com.developcollect.commonnotify.config.IMessageTemplate;
 import com.developcollect.commonnotify.config.NotifyGlobalConfig;
 import org.junit.Before;
@@ -89,7 +88,7 @@ public class EmailNotifyTest {
         notifyParameter.setMessageTemplateValueMap(valueMap);
 
         EmailNotify emailNotify = new EmailNotify();
-        NotifyResult send = emailNotify.send(notifyParameter);
+        INotifyResult send = emailNotify.send(notifyParameter);
 
         System.out.println(send);
     }

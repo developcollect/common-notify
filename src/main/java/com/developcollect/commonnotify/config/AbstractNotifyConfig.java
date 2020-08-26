@@ -1,7 +1,7 @@
 package com.developcollect.commonnotify.config;
 
 import com.developcollect.commonnotify.TextTemplate;
-import com.developcollect.commonnotify.notify.NotifyParameter;
+import com.developcollect.commonnotify.notify.INotifyParameter;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,12 +16,21 @@ import java.util.function.Function;
 @Accessors(chain = true)
 public abstract class AbstractNotifyConfig {
 
+    /**
+     * 消息模板提取器
+     */
     private Function<String, IMessageTemplate> messageTemplateFetcher;
 
-    private BiFunction<IMessageTemplate, NotifyParameter, String> titleProcessor =
+    /**
+     * 消息标题处理器
+     */
+    private BiFunction<IMessageTemplate, INotifyParameter, String> titleProcessor =
             (messageTemplate, notifyParameter) -> TextTemplate.mold(messageTemplate.getTitle(), notifyParameter.getMessageTemplateValueMap());
 
-    private BiFunction<IMessageTemplate, NotifyParameter, String> contentProcessor =
+    /**
+     * 消息内容处理器
+     */
+    private BiFunction<IMessageTemplate, INotifyParameter, String> contentProcessor =
             (messageTemplate, notifyParameter) -> TextTemplate.mold(messageTemplate.getContent(), notifyParameter.getMessageTemplateValueMap());
 
 }

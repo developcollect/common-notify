@@ -10,7 +10,7 @@ import java.util.Map;
  * @author zak
  * @since 1.0.0
  */
-public interface NotifyParameter extends Serializable {
+public interface INotifyParameter extends Serializable {
 
     /**
      * 通知类型

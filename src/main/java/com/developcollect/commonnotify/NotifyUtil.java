@@ -1,6 +1,6 @@
 package com.developcollect.commonnotify;
 
-import com.developcollect.commonnotify.notify.NotifyParameter;
+import com.developcollect.commonnotify.notify.INotifyParameter;
 import com.developcollect.commonnotify.notify.email.EmailNotifyParameter;
 
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class NotifyUtil {
     }
 
 
-    public static void send(NotifyParameter notifyParameter) {
+    public static void send(INotifyParameter notifyParameter) {
 
     }
 

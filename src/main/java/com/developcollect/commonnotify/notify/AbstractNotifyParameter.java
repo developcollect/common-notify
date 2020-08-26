@@ -12,7 +12,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Data
-public abstract class BaseNotifyParameter implements NotifyParameter {
+public abstract class AbstractNotifyParameter implements INotifyParameter {
 
     private String templateSymbol;
 

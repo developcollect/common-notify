@@ -1,7 +1,7 @@
 package com.developcollect.commonnotify.notify.email;
 
 import com.developcollect.commonnotify.NotifyTypes;
-import com.developcollect.commonnotify.notify.BaseNotifyParameter;
+import com.developcollect.commonnotify.notify.AbstractNotifyParameter;
 import lombok.Data;
 import org.springframework.core.io.Resource;
 
@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 1.0.0
  */
 @Data
-public class EmailNotifyParameter extends BaseNotifyParameter {
+public class EmailNotifyParameter extends AbstractNotifyParameter {
 
     /**
      * 抄送

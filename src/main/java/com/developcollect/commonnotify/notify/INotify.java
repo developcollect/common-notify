@@ -1,6 +1,6 @@
 package com.developcollect.commonnotify.notify;
 
-import com.developcollect.commonnotify.NotifyResult;
+import com.developcollect.commonnotify.INotifyResult;
 
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author zak
  * @version 1.0.0
  */
-public interface Notify extends Serializable {
+public interface INotify<N extends INotifyParameter, R extends INotifyResult> extends Serializable {
 
     /**
      * 发送通知到指定的目标
@@ -21,5 +21,5 @@ public interface Notify extends Serializable {
      * @author zak
      * @date 2020/8/24 14:32
      */
-    NotifyResult send(NotifyParameter notifyParameter);
+    R send(N notifyParameter);
 }

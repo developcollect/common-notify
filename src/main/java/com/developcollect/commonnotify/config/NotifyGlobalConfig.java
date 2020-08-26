@@ -16,9 +16,21 @@ import java.util.Map;
 public class NotifyGlobalConfig {
 
     private Map<Integer, AbstractNotifyConfig> notifyConfigMap = new HashMap<>();
+
+    /**
+     * 模板变量正则表达式
+     * 该表达式只匹配占位符中的变量名, 不含展位符起始和结束
+     */
     private static String TEMPLATE_VALUE_REGEX = "[A-Za-z]+?[A-Za-z0-9_#@~!`%^&*=+/?><';:\\-]*?";
+    /**
+     * 模板变量占位符起始
+     */
     private String placeholderBegin = "${";
+    /**
+     * 模板变量占位符结束
+     */
     private String placeholderEnd = "}";
+
 
     private void init() {
         INSTANCE = this;

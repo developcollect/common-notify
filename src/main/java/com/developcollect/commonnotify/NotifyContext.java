@@ -2,7 +2,7 @@ package com.developcollect.commonnotify;
 
 import com.developcollect.commonnotify.config.AbstractNotifyConfig;
 import com.developcollect.commonnotify.config.NotifyGlobalConfig;
-import com.developcollect.commonnotify.notify.NotifyParameter;
+import com.developcollect.commonnotify.notify.INotifyParameter;
 
 /**
  * @author zak
@@ -12,7 +12,7 @@ public class NotifyContext {
 
     private AbstractNotifyConfig notifyConfig;
 
-    private NotifyParameter notifyParameter;
+    private INotifyParameter notifyParameter;
 
     private NotifyContext() {
     }
@@ -24,7 +24,7 @@ public class NotifyContext {
     /**
      * 初始化上下文, 并绑定到当前线程
      */
-    public static NotifyContext init(NotifyParameter notifyParameter) {
+    public static NotifyContext init(INotifyParameter notifyParameter) {
         NotifyContext context = new NotifyContext();
         context.notifyParameter = notifyParameter;
         context.notifyConfig = NotifyGlobalConfig.getNotifyConfig(notifyParameter.getNotifyType());
@@ -37,7 +37,7 @@ public class NotifyContext {
         return notifyContextThreadLocal.get();
     }
 
-    public <T extends NotifyParameter> T getNotifyParameter() {
+    public <T extends INotifyParameter> T getNotifyParameter() {
         return (T) this.notifyParameter;
     }
 

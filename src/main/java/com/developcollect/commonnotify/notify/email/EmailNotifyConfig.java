@@ -1,6 +1,7 @@
-package com.developcollect.commonnotify.config;
+package com.developcollect.commonnotify.notify.email;
 
 import cn.hutool.extra.mail.MailAccount;
+import com.developcollect.commonnotify.config.AbstractNotifyConfig;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
