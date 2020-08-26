@@ -1,11 +1,9 @@
 package com.developcollect.commonnotify.notify.email;
 
-import com.developcollect.commonnotify.INotifyResult;
+import com.developcollect.commonnotify.BaseNotifyResult;
 import com.developcollect.commonnotify.NotifyTypes;
-import com.developcollect.commonnotify.SendResult;
 import lombok.Data;
 
-import java.util.List;
 
 /**
  * @author Zhu Kaixiao
@@ -15,9 +13,7 @@ import java.util.List;
  * 仅限于授权后使用，禁止非授权传阅以及私自用于商业目的。
  */
 @Data
-public class EmailNotifyResult implements INotifyResult {
-
-    private List<SendResult> sendResults;
+public class EmailNotifyResult extends BaseNotifyResult {
 
     @Override
     public int getNotifyType() {
