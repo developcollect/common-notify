@@ -2,11 +2,14 @@ package com.developcollect.commonnotify.config;
 
 
 import cn.hutool.core.util.ReUtil;
+import com.developcollect.commonnotify.DefaultNotifyFactory;
+import com.developcollect.commonnotify.INotifyFactory;
 import com.developcollect.commonnotify.TextTemplate;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author zak
@@ -15,13 +18,14 @@ import java.util.Map;
 @Data
 public class NotifyGlobalConfig {
 
-    private Map<Integer, AbstractNotifyConfig> notifyConfigMap = new HashMap<>();
-
     /**
      * 模板变量正则表达式
      * 该表达式只匹配占位符中的变量名, 不含展位符起始和结束
      */
     private static String TEMPLATE_VALUE_REGEX = "[A-Za-z]+?[A-Za-z0-9_#@~!`%^&*=+/?><';:\\-]*?";
+
+    private Map<Integer, Supplier<AbstractNotifyConfig>> notifyConfigMap = new HashMap<>();
+
     /**
      * 模板变量占位符起始
      */
@@ -30,6 +34,8 @@ public class NotifyGlobalConfig {
      * 模板变量占位符结束
      */
     private String placeholderEnd = "}";
+
+    private INotifyFactory notifyFactory = new DefaultNotifyFactory();
 
 
     private void init() {
@@ -41,12 +47,12 @@ public class NotifyGlobalConfig {
 
     private static NotifyGlobalConfig INSTANCE;
 
-    private static NotifyGlobalConfig getInstance() {
+    public static NotifyGlobalConfig getInstance() {
         return INSTANCE;
     }
 
-    public static <T extends AbstractNotifyConfig> T getNotifyConfig(int notifyType) {
-        return (T) getInstance().notifyConfigMap.get(notifyType);
+    public <T extends AbstractNotifyConfig> T getNotifyConfig(int notifyType) {
+        return (T) getInstance().notifyConfigMap.get(notifyType).get();
     }
 
 }

@@ -31,7 +31,7 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
         String messageId = EmailUtil.sendHtml(
                 mailAccount,
                 notifyParameter.getTos(), notifyParameter.getCcs(), notifyParameter.getBccs(),
-                title, content, notifyParameter.getResource()
+                title, content, notifyParameter.getResources()
         );
 
         // 创建通知结果

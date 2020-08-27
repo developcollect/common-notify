@@ -27,7 +27,7 @@ public class NotifyContext {
     public static NotifyContext init(INotifyParameter notifyParameter) {
         NotifyContext context = new NotifyContext();
         context.notifyParameter = notifyParameter;
-        context.notifyConfig = NotifyGlobalConfig.getNotifyConfig(notifyParameter.getNotifyType());
+        context.notifyConfig = NotifyGlobalConfig.getInstance().getNotifyConfig(notifyParameter.getNotifyType());
         notifyContextThreadLocal.set(context);
         return context;
     }

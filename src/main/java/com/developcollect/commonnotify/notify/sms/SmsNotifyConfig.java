@@ -4,6 +4,7 @@ package com.developcollect.commonnotify.notify.sms;
 import com.developcollect.commonnotify.config.AbstractNotifyConfig;
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,15 +19,16 @@ public class SmsNotifyConfig extends AbstractNotifyConfig {
     /**
      * 短信发送平台
      */
-    private int smsPlatform;
+    private int smsPlatform = SmsPlatforms.ALI;
 
     /**
      * 短信发送平台配置
      */
-    private Map<String, Object> smsPlatformConfigMap;
+    private Map<String, Object> smsPlatformConfigMap = new HashMap<>();
+
 
     /**
-     * 短信发送器
+     * 短信通知工厂
      */
-    private SmsSender smsSender;
+    private ISmsNotifyFactory smsNotifyFactory = new DefaultSmsNotifyFactory();
 }

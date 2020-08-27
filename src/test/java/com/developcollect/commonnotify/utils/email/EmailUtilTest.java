@@ -24,9 +24,9 @@ public class EmailUtilTest {
         MailAccount mailAccount = new MailAccount();
         mailAccount.setAuth(true);
         mailAccount.setHost("smtp.qq.com");
-        mailAccount.setUser("444323306@qq.com");
-        mailAccount.setPass("lppkefbgjjppbhbc");
-        mailAccount.setFrom("私人定制<444323306@qq.com>");
+        mailAccount.setUser("1033160032@qq.com");
+        mailAccount.setPass("rqovrdfhdrfgbbfh");
+        mailAccount.setFrom("私人定制<1033160032@qq.com>");
 
         String s = EmailUtil.sendHtml(mailAccount, Arrays.asList("3617246657@qq.com", "690710726@qq.com"), "主题", "内筒", resources);
         System.out.println(s);
