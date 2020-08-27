@@ -8,6 +8,6 @@ public interface SmsPlatforms {
     /**
      * 阿里云短信
      */
-    int ALI = 1;
+    int ALI_CLOUD = 1;
 
 }
