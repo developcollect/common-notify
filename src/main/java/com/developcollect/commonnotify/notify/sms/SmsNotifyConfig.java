@@ -19,7 +19,7 @@ public class SmsNotifyConfig extends AbstractNotifyConfig {
     /**
      * 短信发送平台
      */
-    private int smsPlatform = SmsPlatforms.ALI;
+    private int smsPlatform = SmsPlatforms.ALI_CLOUD;
 
     /**
      * 短信发送平台配置
@@ -31,4 +31,13 @@ public class SmsNotifyConfig extends AbstractNotifyConfig {
      * 短信通知工厂
      */
     private ISmsNotifyFactory smsNotifyFactory = new DefaultSmsNotifyFactory();
+
+
+    public void putPlatformConfig(String key, Object val) {
+        smsPlatformConfigMap.put(key, val);
+    }
+
+    public <T> T getPlatformConfig(String key) {
+        return (T) smsPlatformConfigMap.get(key);
+    }
 }

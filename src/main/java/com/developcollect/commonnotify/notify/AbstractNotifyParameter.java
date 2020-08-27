@@ -14,10 +14,19 @@ import java.util.Map;
 @Data
 public abstract class AbstractNotifyParameter implements INotifyParameter {
 
+    /**
+     * 模板标识
+     */
     private String templateSymbol;
 
+    /**
+     * 接收者
+     */
     private Collection<String> tos;
 
+    /**
+     * 模板填充变量
+     */
     private Map<String, String> messageTemplateValueMap;
 
     public void setTos(Collection<String> tos) {

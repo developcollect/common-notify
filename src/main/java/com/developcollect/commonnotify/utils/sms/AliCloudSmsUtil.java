@@ -37,7 +37,10 @@ public class AliCloudSmsUtil {
         request.putQueryParameter("SignName", signName);
         request.putQueryParameter("TemplateCode", templateCode);
         request.putQueryParameter("TemplateParam", SerializeUtil.beanToJson(templateParam));
-        request.putQueryParameter("SmsUpExtendCode", smsUpExtendCode);
+        if (StringUtils.isNotBlank(smsUpExtendCode)) {
+            request.putQueryParameter("SmsUpExtendCode", smsUpExtendCode);
+        }
+
         try {
             CommonResponse response = client.getCommonResponse(request);
             return response;

@@ -19,7 +19,7 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
 
 
     @Override
-    protected EmailNotifyResult send(String title, String content, NotifyContext context) {
+    protected EmailNotifyResult send(NotifyContext context) {
         EmailNotifyConfig notifyConfig = context.getNotifyConfig();
         EmailNotifyParameter notifyParameter = context.getNotifyParameter();
 
@@ -31,7 +31,7 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
         String messageId = EmailUtil.sendHtml(
                 mailAccount,
                 notifyParameter.getTos(), notifyParameter.getCcs(), notifyParameter.getBccs(),
-                title, content, notifyParameter.getResources()
+                processTitle(context), processContent(context), notifyParameter.getResources()
         );
 
         // 创建通知结果

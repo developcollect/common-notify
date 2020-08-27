@@ -1,8 +1,13 @@
 package com.developcollect.commonnotify;
 
 import com.developcollect.commonnotify.config.AbstractNotifyConfig;
+import com.developcollect.commonnotify.config.IMessageTemplate;
 import com.developcollect.commonnotify.config.NotifyGlobalConfig;
+import com.developcollect.commonnotify.exception.NotifyException;
 import com.developcollect.commonnotify.notify.INotifyParameter;
+import lombok.Getter;
+
+import java.util.function.Function;
 
 /**
  * @author zak
@@ -13,6 +18,9 @@ public class NotifyContext {
     private AbstractNotifyConfig notifyConfig;
 
     private INotifyParameter notifyParameter;
+
+    @Getter
+    private IMessageTemplate messageTemplate;
 
     private NotifyContext() {
     }
@@ -28,8 +36,25 @@ public class NotifyContext {
         NotifyContext context = new NotifyContext();
         context.notifyParameter = notifyParameter;
         context.notifyConfig = NotifyGlobalConfig.getInstance().getNotifyConfig(notifyParameter.getNotifyType());
+        context.messageTemplate = context.fetchMessageTemplate();
+
         notifyContextThreadLocal.set(context);
         return context;
+    }
+
+    protected IMessageTemplate fetchMessageTemplate() {
+        Function<String, IMessageTemplate> messageTemplateFetcher = notifyConfig.getMessageTemplateFetcher();
+
+        if (messageTemplateFetcher != null) {
+            IMessageTemplate messageTemplate = messageTemplateFetcher.apply(notifyParameter.getTemplateSymbol());
+            if (messageTemplate == null) {
+                throw new NotifyException("消息模板不存在: symbol: [{}]", notifyParameter.getTemplateSymbol());
+            }
+
+            return messageTemplate;
+        }
+
+        return null;
     }
 
 
