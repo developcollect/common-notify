@@ -26,12 +26,17 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
         // 邮箱认证配置
         MailAccount mailAccount = notifyConfig.getMailAccountSupplier().get();
 
+
+        // 发信
+        String title = processTitle(context);
+        String content = processContent(context);
+        log.debug("发送邮件通知:发送者:[{}], 接受者:[{}], 标题:[{}], 内容:[{}]", mailAccount.getFrom(), notifyParameter.getTos(), title, content);
         // 邮件发送只有一个messageId, 发信方法调用成功了就说明投送成功了
         // 对方是否收到还要取决于邮箱平台是否拦截过滤等等
         String messageId = EmailUtil.sendHtml(
                 mailAccount,
                 notifyParameter.getTos(), notifyParameter.getCcs(), notifyParameter.getBccs(),
-                processTitle(context), processContent(context), notifyParameter.getResources()
+                title, content, notifyParameter.getResources()
         );
 
         // 创建通知结果

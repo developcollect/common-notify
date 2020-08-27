@@ -21,8 +21,6 @@ public abstract class AbstractNotify<N extends INotifyParameter, R extends INoti
         // 初始化上下文
         NotifyContext context = NotifyContext.init(notifyParameter);
 
-        // 发信
-        log.debug("发送通知: 接受者:[{}], 标题:[{}], 内容:[{}]", notifyParameter.getTos());
         return send(context);
     }
 
