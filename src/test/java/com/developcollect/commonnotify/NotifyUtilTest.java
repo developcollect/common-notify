@@ -21,12 +21,12 @@ public class NotifyUtilTest {
         messageTemplateMap.put("e1", new IMessageTemplate() {
             @Override
             public String getTitle() {
-                return "请假条";
+                return "邮件发送测试";
             }
 
             @Override
             public String getContent() {
-                return "请假1天";
+                return "邮件发送测试 ==> \n\n验证码: ${code}";
             }
         });
 
