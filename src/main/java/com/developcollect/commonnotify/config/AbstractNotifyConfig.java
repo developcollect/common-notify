@@ -5,6 +5,7 @@ import com.developcollect.commonnotify.notify.INotifyParameter;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -14,7 +15,7 @@ import java.util.function.Function;
  */
 @Data
 @Accessors(chain = true)
-public abstract class AbstractNotifyConfig {
+public abstract class AbstractNotifyConfig implements Serializable {
 
     /**
      * 消息模板提取器

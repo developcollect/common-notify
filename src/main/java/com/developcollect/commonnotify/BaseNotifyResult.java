@@ -14,4 +14,8 @@ public abstract class BaseNotifyResult implements INotifyResult {
 
     private List<SendResult> sendResults;
 
+    @Override
+    public String toString() {
+        return "BaseNotifyResult(rawResult=" + this.getRawResult() + ", sendResults=" + this.getSendResults() + ", NotifyType=" + getNotifyType() + ")";
+    }
 }

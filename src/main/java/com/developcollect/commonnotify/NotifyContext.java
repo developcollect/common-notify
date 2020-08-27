@@ -7,13 +7,14 @@ import com.developcollect.commonnotify.exception.NotifyException;
 import com.developcollect.commonnotify.notify.INotifyParameter;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.function.Function;
 
 /**
  * @author zak
  * @version 1.0.0
  */
-public class NotifyContext {
+public class NotifyContext implements Serializable {
 
     private AbstractNotifyConfig notifyConfig;
 

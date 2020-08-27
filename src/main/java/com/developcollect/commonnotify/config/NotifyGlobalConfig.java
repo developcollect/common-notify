@@ -7,6 +7,7 @@ import com.developcollect.commonnotify.INotifyFactory;
 import com.developcollect.commonnotify.TextTemplate;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -16,7 +17,7 @@ import java.util.function.Supplier;
  * @version 1.0.0
  */
 @Data
-public class NotifyGlobalConfig {
+public class NotifyGlobalConfig implements Serializable {
 
     /**
      * 模板变量正则表达式

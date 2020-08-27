@@ -2,12 +2,14 @@ package com.developcollect.commonnotify;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author zak
  * @version 1.0.0
  */
 @Data
-public class SendResult {
+public class SendResult implements Serializable {
 
     /**
      * 消息id

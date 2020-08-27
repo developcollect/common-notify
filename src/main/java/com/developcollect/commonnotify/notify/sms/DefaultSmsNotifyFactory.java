@@ -12,7 +12,7 @@ public class DefaultSmsNotifyFactory implements ISmsNotifyFactory {
     @Override
     public INotify<SmsNotifyParameter, SmsNotifyResult> create(int smsPlatform) {
         switch (smsPlatform) {
-            case SmsPlatforms.ALI:
+            case SmsPlatforms.ALI_CLOUD:
                 return new AliCloudSmsNotify();
             default:
                 throw new IllegalArgumentException("不支持的短信服务平台: " + smsPlatform);

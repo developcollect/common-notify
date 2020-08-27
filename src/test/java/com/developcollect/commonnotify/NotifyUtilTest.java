@@ -78,7 +78,8 @@ public class NotifyUtilTest {
         valueMap.put("tp", "标题占位");
 
 
-        NotifyUtil.sendEmail("e1", valueMap, "3617246657@qq.com");
+        INotifyResult notifyResult = NotifyUtil.sendEmail("e1", valueMap, "3617246657@qq.com");
+        System.out.println(notifyResult);
     }
 
     @Test

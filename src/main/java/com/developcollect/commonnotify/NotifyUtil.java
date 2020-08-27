@@ -50,6 +50,11 @@ public class NotifyUtil {
     }
 
 
+    public static INotifyResult sendSms(String templateSymbol, Map<String, String> vals, Collection<String> tos) {
+        return null;
+    }
+
+
     public static INotifyResult send(INotifyParameter notifyParameter) {
         INotify notify = NotifyGlobalConfig
                 .getInstance()
