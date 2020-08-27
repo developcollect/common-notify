@@ -35,13 +35,14 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
         );
 
         // 创建通知结果
-        EmailNotifyResult notifyResult = buildResult(notifyParameter, mailAccount, messageId);
+        EmailNotifyResult notifyResult = buildNotifyResult(notifyParameter, mailAccount, messageId);
         return notifyResult;
     }
 
 
-    protected static EmailNotifyResult buildResult(EmailNotifyParameter notifyParameter, MailAccount mailAccount, String messageId) {
+    protected static EmailNotifyResult buildNotifyResult(EmailNotifyParameter notifyParameter, MailAccount mailAccount, String messageId) {
         EmailNotifyResult result = new EmailNotifyResult();
+        result.setRawResult(messageId);
 
         List<SendResult> sendResults = notifyParameter.getTos().stream().map(to -> {
             SendResult sendResult = new SendResult();
@@ -49,6 +50,8 @@ public class EmailNotify extends AbstractNotify<EmailNotifyParameter, EmailNotif
             sendResult.setSender(mailAccount.getFrom());
             sendResult.setRecipient(to);
             sendResult.setSuccess(true);
+            sendResult.setCode("OK");
+            sendResult.setCodeDesc("OK");
             return sendResult;
         }).collect(Collectors.toList());
 

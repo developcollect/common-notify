@@ -13,17 +13,32 @@ public class SendResult {
      * 消息id
      */
     private String messageId;
+
     /**
      * 发送者
      */
     private String sender;
+
     /**
      * 接收者
      */
     private String recipient;
+
     /**
-     * 是否发送成功
-     * 注意: 这里只是表示发送成功, 接收者并不一定接收成功
+     * 请求状态码
+     */
+    private String code;
+
+    /**
+     * 状态码的描述
+     */
+    private String codeDesc;
+
+
+    /**
+     * 是否请求成功
+     * 注意: 这里只是表示发送请求是否成功
+     *       第三方平台是否发送, 以及是否发送成功不做保证
      */
     private Boolean success;
 

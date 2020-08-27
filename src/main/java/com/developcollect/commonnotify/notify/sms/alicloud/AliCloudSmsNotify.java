@@ -3,12 +3,18 @@ package com.developcollect.commonnotify.notify.sms.alicloud;
 import cn.hutool.core.lang.Assert;
 import com.aliyuncs.CommonResponse;
 import com.developcollect.commonnotify.NotifyContext;
+import com.developcollect.commonnotify.SendResult;
 import com.developcollect.commonnotify.notify.AbstractNotify;
 import com.developcollect.commonnotify.notify.sms.SmsNotifyConfig;
 import com.developcollect.commonnotify.notify.sms.SmsNotifyParameter;
 import com.developcollect.commonnotify.notify.sms.SmsNotifyResult;
 import com.developcollect.commonnotify.utils.sms.AliCloudSmsUtil;
+import com.developcollect.dcinfra.utils.SerializeUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -43,7 +49,7 @@ public class AliCloudSmsNotify extends AbstractNotify<SmsNotifyParameter, SmsNot
                 notifyParameter.getTemplateSymbol(), notifyParameter.getMessageTemplateValueMap(),
                 smsUpExtendCode
         );
-        return buildNotifyResult(response);
+        return buildNotifyResult(context, response);
     }
 
     @Override
@@ -56,7 +62,25 @@ public class AliCloudSmsNotify extends AbstractNotify<SmsNotifyParameter, SmsNot
         Assert.notBlank(notifyParameter.getExt(AliCloudSmsConstants.SIGN_NAME), "阿里云短信签名不能为空");
     }
 
-    SmsNotifyResult buildNotifyResult(CommonResponse response) {
-        return null;
+    private SmsNotifyResult buildNotifyResult(NotifyContext context, CommonResponse response) {
+        SmsNotifyResult smsNotifyResult = new SmsNotifyResult();
+
+        String data = response.getData();
+        HashMap dataMap = SerializeUtil.jsonToBean(data, HashMap.class);
+
+        List<SendResult> sendResults = context.getNotifyParameter().getTos().stream().map(to -> {
+            SendResult sendResult = new SendResult();
+            sendResult.setMessageId(dataMap.get("BizId").toString());
+            sendResult.setSuccess("OK".equals(dataMap.get("Code")));
+            sendResult.setCode(dataMap.get("Code").toString());
+            sendResult.setCodeDesc(dataMap.get("Message").toString());
+            sendResult.setRecipient(to);
+            return sendResult;
+        }).collect(Collectors.toList());
+
+        smsNotifyResult.setRawResult(response);
+        smsNotifyResult.setSendResults(sendResults);
+
+        return smsNotifyResult;
     }
 }
